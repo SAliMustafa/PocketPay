@@ -15,7 +15,7 @@ const passUserToView = require("./middleware/pass-user-to-view.js");
 // controller Imports
 const authController = require("./controllers/auth.controllers.js");
 const indexController = require("./controllers/index.controllers.js");
-
+const cardController = require("./controllers/card.controllers.js")
 
 // Middleware
 app.use(express.static('public')) // my app will serve all static files from public folder
@@ -56,7 +56,7 @@ app.use(passUserToView)
 // Routes go here
 app.use('/auth',authController)
 app.use('/',indexController)
-
+app.use('/card',cardController)
 
 // PROTECTED ROUTES:
 app.use(isSignedIn)

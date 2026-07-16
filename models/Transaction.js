@@ -16,6 +16,5 @@ const transactionSchema = new mongoose.Schema({
     counterparty: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "User"
-
     }
 }, {timestamps: true})
