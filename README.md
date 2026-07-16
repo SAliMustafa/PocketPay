@@ -29,17 +29,38 @@
 
 ## Routes
 
-| Method | Route | Description |
-|---------|-------|-------------|
-| GET | / | Home page |
-| GET | /listings | List all listings |
-| GET | /listings/new | New listing form |
-| POST | /listings | Create listing |
-| GET | /listings/:id | View listing |
-| GET | /listings/:id/edit | Edit listing form |
-| PUT | /listings/:id | Update listing |
-| DELETE | /listings/:id | Delete listing |
+### Auth Routes
 
+| Method | Route      | Description                          |
+|--------|------------|---------------------------------------|
+| GET    | /sign-up   | Render sign-up form                   |
+| POST   | /sign-up   | Create new user, log them in          |
+| GET    | /sign-in   | Render sign-in form                   |
+| POST   | /sign-in   | Authenticate user, create session     |
+| GET    | /sign-out  | Log out user, destroy session         |
+
+### Card Routes
+
+| Method | Route            | Description                                  |
+|--------|-------------------|-----------------------------------------------|
+| GET    | /cards            | Index — list all of the logged-in user's cards |
+| GET    | /cards/new        | Render form to add a new card                |
+| POST   | /cards            | Create a new card                            |
+| GET    | /cards/:cardId    | Show a single card's details + its transactions |
+| GET    | /cards/:cardId/edit | Render form to edit a card                 |
+| PUT    | /cards/:cardId    | Update a card's details (nickname, expiry, etc.) |
+| DELETE | /cards/:cardId    | Delete a card                                |
+
+### Transaction Routes
+
+| Method | Route                                | Description                                   |
+|--------|----------------------------------------|------------------------------------------------|
+| GET    | /cards/:cardId/transactions/new-deposit    | Render form to deposit into a card         |
+| POST   | /cards/:cardId/transactions/deposit        | Create a deposit transaction               |
+| GET    | /cards/:cardId/transactions/new-withdrawal | Render form to withdraw from a card        |
+| POST   | /cards/:cardId/transactions/withdrawal     | Create a withdrawal transaction            |
+| GET    | /cards/:cardId/transactions/new-transfer   | Render form to transfer to another user    |
+| POST   | /cards/:cardId/transactions/transfer       | Create the transfer_out + transfer_in pair |
 
 
 ## Features

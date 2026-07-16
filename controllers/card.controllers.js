@@ -15,4 +15,8 @@ router.post('/', async (req,res)=>{
     res.redirect('/card')
 })
 
+router.get('/:cardid', async (req,res)=>{
+    const foundCard = await Card.findById(req.params.cardid)
+    res.render('card/card-details.ejs', {card: foundCard})
+})
 module.exports = router;

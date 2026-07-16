@@ -3,7 +3,8 @@ const mongoose = require('mongoose')
 const cardSchema = new mongoose.Schema({
     balance:{
         type: Number,
-        require: true
+        default: 0
+
     },
     cardNumber:{
         type: Number,

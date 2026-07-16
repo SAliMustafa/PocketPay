@@ -18,3 +18,6 @@ const transactionSchema = new mongoose.Schema({
         ref: "User"
     }
 }, {timestamps: true})
+
+const Transaction = new mongoose.model('Transaction', transactionSchema)
+module.exports = Transaction
