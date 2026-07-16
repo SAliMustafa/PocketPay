@@ -27,4 +27,14 @@ router.get('/:cardid', isSignedIn, async (req,res)=>{
     }
 })
 
+router.get('/:cardid/edit', isSignedIn, async (req,res)=>{
+    const foundCard = await Card.findById(req.params.cardid)
+    res.render('card/card-edit.ejs', {card: foundCard})
+})
+
+router.post('/:cardid/edit', isSignedIn, async (req,res)=>{
+    const updatedCard = await Card.findByIdAndUpdate(req.params.cardid, req.body)
+    res.redirect('/card')
+})
+
 module.exports = router;

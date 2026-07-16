@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <%- include('../partials/navbar') %>
+    <h1>Edit Your Card</h1>
+    <form action="/card/<%=card._id%>/edit" method="post">
+        <label for="cardNumber">Card Number</label>
+        <input value="<%=card.cardNumber %>" name="cardNumber" id="cardNumber" type="number">
+        <br>
+        <br>
+        <label for="cardType">Card Type</label>
+        <input value="<%=card.cardType%>" name="cardType" id="cardType" type="text">
+        <br>
+        <br>
+        <label for="expiryDate">Expiry Date</label>
+        <input value="<%=card.expiryDate%>" name="expiryDate" id="expiryDate" type="month">
+        <br>  
+        <br>
+        <button>Confirm Edit</button>
+    </form>
+</body>
+</html>
