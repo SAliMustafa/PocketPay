@@ -37,4 +37,9 @@ router.post('/:cardid/edit', isSignedIn, async (req,res)=>{
     res.redirect('/card')
 })
 
+router.post('/:cardid/delete', isSignedIn, async (req,res)=>{
+    const deleteCard = await Card.findByIdAndDelete(req.params.cardid)
+    res.redirect('/card')
+})
+
 module.exports = router;

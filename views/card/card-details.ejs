@@ -12,5 +12,9 @@
     <p>Card Type: <%=card.cardType%></p>
     <p>Expiry Date: <%=card.expiryDate%></p>
     <p>Balance: BD <%=card.balance%></p>
+    <a href="/card/<%=card._id%>/edit"><button>Edit</button></a>
+    <form action="/card/<%=card._id%>/delete" method="post">
+        <button>Delete Card</button>
+    </form>
 </body>
 </html>
