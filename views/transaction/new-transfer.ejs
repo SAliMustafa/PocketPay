@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Send Money</h1>
+    <form action="/card/<%=card._id%>/transaction/transfer" method="post">
+        <label for="username">username</label>
+        <input name="username" id="username" type="text">
+        <br><br>
+        <button>Send</button>
+    </form>
+</body>
+</html>

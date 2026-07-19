@@ -16,6 +16,7 @@ const passUserToView = require("./middleware/pass-user-to-view.js");
 const authController = require("./controllers/auth.controllers.js");
 const indexController = require("./controllers/index.controllers.js");
 const cardController = require("./controllers/card.controllers.js")
+const transactionController = require('./controllers/transaction.controllers.js')
 
 // Middleware
 app.use(express.static('public')) // my app will serve all static files from public folder
@@ -57,7 +58,7 @@ app.use(passUserToView)
 app.use('/auth',authController)
 app.use('/',indexController)
 app.use('/card',cardController)
-
+app.use('/card/:cardid/transaction', transactionController)
 // PROTECTED ROUTES:
 app.use(isSignedIn)
 // Everything under the user NEEDS to be logged in to se

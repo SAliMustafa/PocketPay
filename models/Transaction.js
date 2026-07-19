@@ -3,19 +3,28 @@ const mongoose = require('mongoose')
 const transactionSchema = new mongoose.Schema({
     transactionType:{
         type: String,
-        require: true
+        required: true,
+        enum: ['deposit', 'withdrawal', 'transfer_out', 'transfer_in']
     },
     amount: {
         type: Number,
-        reqiore: true,
+        required: true,
         min: 0.1
     },
     transactionId: {
         type: Number,
     },
+    transferId: {
+        type: String
+    },
     counterparty: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "User"
+    },
+    card: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Card",
+        required: true
     }
 }, {timestamps: true})
 

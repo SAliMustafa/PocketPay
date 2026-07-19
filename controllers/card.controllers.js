@@ -3,8 +3,7 @@ const Card = require("../models/Card")
 const router = require("express").Router()
 
 router.get('/', isSignedIn, async (req,res)=>{
-    console.log(req.session)
-    const myCard = await Card.find({ owner: req.session.user._id })
+    const myCard = await Card.find({ owner: req.session.user._id }).populate("owner")
     console.log(myCard)
     res.render('card/card.ejs', {card: myCard})
 })
@@ -20,6 +19,7 @@ router.post('/', isSignedIn, async (req,res)=>{
 
 router.get('/:cardid', isSignedIn, async (req,res)=>{
     const foundCard = await Card.findById(req.params.cardid)
+    console.log(foundCard.owner)
     if(foundCard.owner == req.session.user._id){
     res.render('card/card-details.ejs', {card: foundCard})
     } else{
