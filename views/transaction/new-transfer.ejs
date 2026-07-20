@@ -7,12 +7,15 @@
     <title>Document</title>
 </head>
 <body>
+    <%- include('../partials/navbar') %>
+    <main>
     <h1>Send Money</h1>
     <form action="/card/<%=card._id%>/transaction/find-recipient" method="post">
         <label for="username">username</label>
         <input name="username" id="username" type="text">
         <br><br>
-        <button>Send</button>
+        <button class="btn">Next</button>
     </form>
+    </main>
 </body>
 </html>

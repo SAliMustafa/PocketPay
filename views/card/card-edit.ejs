@@ -8,6 +8,7 @@
 </head>
 <body>
     <%- include('../partials/navbar') %>
+    <main>
     <h1>Edit Your Card</h1>
     <form action="/card/<%=card._id%>/edit" method="post">
         <label for="cardNumber">Card Number</label>
@@ -15,14 +16,18 @@
         <br>
         <br>
         <label for="cardType">Card Type</label>
-        <input value="<%=card.cardType%>" name="cardType" id="cardType" type="text">
+        <select name="cardType" id="cardType" required>
+            <option value="debit">Debit</option>
+            <option value="credit">Credit</option>
+        </select>           
         <br>
         <br>
         <label for="expiryDate">Expiry Date</label>
         <input value="<%=card.expiryDate%>" name="expiryDate" id="expiryDate" type="month">
         <br>  
         <br>
-        <button>Confirm Edit</button>
+        <button class="btn">Confirm Edit</button>
     </form>
+    </main>
 </body>
 </html>

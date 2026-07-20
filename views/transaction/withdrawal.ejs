@@ -7,12 +7,15 @@
     <title>Document</title>
 </head>
 <body>
+    <%- include('../partials/navbar') %>
+    <main>
     <h1>Withdraw Money</h1>
     <form action="/card/<%=card._id%>/transaction/withdrawal" method="post">
         <label for="amount">Withdrawal Amount</label>
         <input name="amount" id="amount" type="Number" step="0.1">
         <br><br>
-        <button>Withdraw</button>
+        <button class="btn">Withdraw</button>
     </form>
+    </main>
 </body>
 </html>

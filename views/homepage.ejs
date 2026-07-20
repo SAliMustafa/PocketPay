@@ -10,6 +10,52 @@
     <%- include('./partials/navbar') %>
     <main>
         <h1>Welcome back, <%= user.username %></h1>
+        <section class="box">
+            <h2>Total Balance</h2>
+            <p class="balance">BD <%=totalBalance%> </p>
+        </section>
+        <section>
+            <div class="section-header">
+                <h2>Your Cards</h2>
+                <a href="/card">View all</a>
+            </div>
+            <ul class="card-grid">
+                <% for (let card of cards){%>
+                    <li>
+                        <a href="/card/<%=card._id%>" class="card-visual card-<%=card.cardType%>">
+                            <p class="card-type"><%=card.cardType%></p>
+                            <p class="card-number">xxxx xxxx xxxx <%=card.cardNumber%></p>
+                            <p class="card-balance">BD <%=card.balance%></p>
+                        </a>
+                    </li>
+                <%}%>
+                <li>
+                    <a href="/card/new" class="card-tile-add">+ Add Card</a>
+                </li>
+            </ul>
+        </section>
+        <section>
+            <h2>Recent Activity</h2>
+            <% if (recentTransactions.length === 0){%>
+                <p>No transactions yet</p>
+            <%}else{%>
+                <ul class="transaction-list box">
+                    <% for (let t of recentTransactions){%>
+                        <li class="transaction-row">
+                            <div>
+                                <p><%=t.transactionType%></p>
+                                <p><%=t.createdAt.toDateString() %></p>
+                            </div>
+                            <%if(t.transactionType === 'deposit' || t.transactionType === 'transfer_in'){%>
+                                <p class="amount-positive">+BD <%=t.amount%></p>
+                            <%}else{%>
+                                <p class="amount-negative">-BD <%=t.amount%></p>
+                            <%}%>
+                        </li>
+                    <%}%>
+                </ul>
+            <% }%>
+        </section>
     </main>
 </body>
 </html>

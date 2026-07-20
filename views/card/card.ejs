@@ -8,10 +8,12 @@
 </head>
 <body>
     <%- include('../partials/navbar') %>
+    <main>
     <h1><%= card[0].owner.username %> Cards</h1>
     <p><% for (let oneCard of card){%></p>
         <p>Card Number: <%= oneCard.cardNumber %></p>
         <a href="/card/<%=oneCard._id%>">View Card Details</a>
     <p><% } %></p>
+    </main>
 </body>
 </html>

@@ -8,6 +8,7 @@
 </head>
 <body>
     <%- include('../partials/navbar') %>
+    <main>
     <h1>Add Your Card</h1>
     <form action="/card" method="post">
         <label for="cardNumber">Card Number</label>
@@ -26,7 +27,8 @@
         <input name="expiryDate" id="expiryDate" type="month">
         <br>  
         <br>
-        <button>Add card</button>
+        <button  class="btn">Add card</button>
     </form>
+    </main>
 </body>
 </html>
