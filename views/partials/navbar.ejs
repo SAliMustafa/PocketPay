@@ -1,15 +1,22 @@
 <nav>
-    
-    <a href="/">Homepage</a>
+    <div class="nav">
     <% if (user){ %>
-    <a href="/auth/sign-out">Logout</a>
-    <a href="/card/new">Add Card</a>
-    <a href="/card">My Cards</a>
+            <a href="/"><img src="/images/PocketPayLogo.png" alt="PocketPay Logo"></a>
+            <a href="/card/new" class="btn-accent">Add Card</a>
+            <a href="/card">My Cards</a>
+            </div>
+            <div class="nav"><a href="/auth/sign-out">Logout</a></div>
+    
+    
 
     <% } else{ %>
-    <a href="/auth/sign-up">Sign up</a>
-    <a href="/auth/sign-in">Login</a>
+            <a href="/"><img src="/images/PocketPayLogo.png" alt="PocketPay Logo"></a>
+        </div>
 
+    <div class="nav">
+        <a href="/auth/sign-up">Sign up</a>
+        <a href="/auth/sign-in">Sign in</a>
+    </div>
     <% } %>
     
 </nav>

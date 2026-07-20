@@ -3,68 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PocketPay - Dashboard</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="/css/base.css">
+    <title>Document</title>
 </head>
-<body class="bg-gray-100 min-h-screen">
-
-    <%- include('partials/navbar.ejs') %>
-
-    <div class="max-w-5xl mx-auto px-4 py-8">
-
-        <!-- Greeting -->
-        <h1 class="text-2xl font-bold text-gray-800 mb-6">
-            Welcome back, <%= user.username %>
-        </h1>
-
-        <!-- Total Balance -->
-        <div class="bg-white rounded-xl shadow-md p-6 mb-8">
-            <p class="text-gray-500 text-sm mb-1">Total Balance</p>
-            <p class="text-4xl font-bold text-gray-900">BD <%= totalBalance.toFixed(2) %></p>
-        </div>
-
-        <!-- Cards Summary -->
-        <div class="flex justify-between items-center mb-4">
-            <h2 class="text-lg font-semibold text-gray-800">Your Cards</h2>
-            <a href="/card" class="text-blue-600 hover:text-blue-700 text-sm font-medium">View all →</a>
-        </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
-            <% cards.forEach(card => { %>
-                <a href="/card/<%= card._id %>" class="bg-white rounded-xl shadow-md p-5 hover:shadow-lg transition">
-                    <p class="text-gray-500 text-xs mb-1"><%= card.cardType %></p>
-                    <p class="text-gray-800 font-medium mb-3">Ending in <%= card.cardNumber %></p>
-                    <p class="text-xl font-bold text-gray-900">BD <%= card.balance.toFixed(2) %></p>
-                </a>
-            <% }) %>
-
-            <a href="/card/new" class="flex items-center justify-center bg-white rounded-xl shadow-md p-5 border-2 border-dashed border-gray-300 text-gray-400 hover:text-blue-600 hover:border-blue-400 transition">
-                + Add Card
-            </a>
-        </div>
-
-        <!-- Recent Transactions -->
-        <h2 class="text-lg font-semibold text-gray-800 mb-4">Recent Activity</h2>
-
-        <div class="bg-white rounded-xl shadow-md divide-y divide-gray-100">
-            <% if (recentTransactions.length === 0) { %>
-                <p class="p-5 text-gray-400 text-sm">No transactions yet.</p>
-            <% } else { %>
-                <% recentTransactions.forEach(tx => { %>
-                    <div class="flex justify-between items-center p-4">
-                        <div>
-                            <p class="text-gray-800 font-medium capitalize"><%= tx.transactionType.replace('_', ' ') %></p>
-                            <p class="text-gray-400 text-xs"><%= tx.createdAt.toDateString() %></p>
-                        </div>
-                        <p class="font-semibold <%= tx.transactionType === 'deposit' || tx.transactionType === 'transfer_in' ? 'text-green-600' : 'text-red-500' %>">
-                            <%= tx.transactionType === 'deposit' || tx.transactionType === 'transfer_in' ? '+' : '-' %>BD <%= tx.amount.toFixed(2) %>
-                        </p>
-                    </div>
-                <% }) %>
-            <% } %>
-        </div>
-
-    </div>
-
+<body>
+    <%- include('./partials/navbar') %>
+    <main>
+        <h1>Welcome back, <%= user.username %></h1>
+    </main>
 </body>
 </html>

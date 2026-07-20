@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/base.css">
     <title>Document</title>
 </head>
 <body>
@@ -14,7 +15,11 @@
         <br>
         <br>
         <label for="cardType">Card Type</label>
-        <input name="cardType" id="cardType" type="text">
+        <select name="cardType" id="cardType" required>
+            <option value="">-- Select --</option>
+            <option value="debit">Debit</option>
+            <option value="credit">Credit</option>
+        </select>           
         <br>
         <br>
         <label for="expiryDate">Expiry Date</label>

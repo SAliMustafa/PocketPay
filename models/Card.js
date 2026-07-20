@@ -15,7 +15,8 @@ const cardSchema = new mongoose.Schema({
     },
     cardType: {
         type: String,
-        require: true
+        require: true,
+        enum: ['debit', 'credit']
     },
     expiryDate: {
         type: String,
