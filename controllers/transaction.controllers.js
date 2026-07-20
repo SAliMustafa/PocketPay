@@ -3,6 +3,7 @@ const Card = require("../models/Card");
 const Transaction = require("../models/Transaction");
 const User = require("../models/User");
 const router = require("express").Router({mergeParams: true})
+const mongoose = require('mongoose')
 
 router.get('/new-deposit', isSignedIn, async (req,res)=>{
     const foundCard = await Card.findById(req.params.cardid)
@@ -36,6 +37,7 @@ router.post('/withdrawal', isSignedIn, async (req,res)=>{
         transactionType: 'withdrawal',
         amount: req.body.amount
     })
+        res.redirect(`/card/${foundCard._id}`)
     } else {
         res.send('insufficient funds')
     }
@@ -46,7 +48,7 @@ router.get('/new-transfer', isSignedIn, async (req,res)=>{
     res.render('transaction/new-transfer.ejs', {card: foundCard})
 })
 
-router.post('/transfer', isSignedIn, async (req,res)=>{
+router.post('/find-recipient', isSignedIn, async (req,res)=>{
     const foundCard = await Card.findById(req.params.cardid)
     const recipient = await User.findOne({username: req.body.username})
     if (!recipient){
@@ -64,4 +66,39 @@ router.post('/transfer', isSignedIn, async (req,res)=>{
         recipientCards: recipientCards
     })
 }) 
+
+router.post('/confirm-transaction', isSignedIn, async (req,res)=>{
+    const foundCard = await Card.findById(req.params.cardid)
+    const amount = Number(req.body.amount)
+    const recipientId = req.body.recipientId
+    const recipientCardId = req.body.recipientCardId
+    if(foundCard.balance >= amount){
+        const recipientCard = await Card.findById(recipientCardId)
+        foundCard.balance = foundCard.balance - amount
+        await foundCard.save()
+        recipientCard.balance = recipientCard.balance + amount
+        await recipientCard.save()
+        const transferId = new mongoose.Types.ObjectId()
+
+        await Transaction.create({
+            card: foundCard._id,
+            transactionType: 'transfer_out',
+            amount: amount,
+            counterparty: recipientId,
+            transferId: transferId
+        })
+
+        await Transaction.create({
+            card: recipientCard._id,
+            transactionType: 'transfer_in',
+            amount: amount,
+            counterparty: req.session.user._id,
+            transferId: transferId
+            
+        })
+        res.redirect(`/card/${foundCard._id}`)
+    } else {
+        res.send('insufficient balance')
+    }
+})
 module.exports = router;

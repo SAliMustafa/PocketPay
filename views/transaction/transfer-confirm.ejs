@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Confirm Transfer</h1>
+    <form action="/card/<%=card._id%>/transaction/confirm-transaction" method="post">
+        <input type="hidden" name="recipientId" value="<%= recipient._id %>">
+        <label for="recipientCardId">Choose Card to Transfer to</label>
+        <select name="recipientCardId" id="recipientCardId">
+            <% for (let card of recipientCards) {%>
+                <option value="<%=card._id%>">Ending with <%= card.cardNumber %></option>
+            <% } %>
+        </select>
+        <br><br>
+        <label for="amount">Amout to transfer</label>
+        <input name="amount" id="amount" type="Number" step="0.1">
+        <br><br>
+        <button>Send</button>
+    </form>
+</body>
+</html>
