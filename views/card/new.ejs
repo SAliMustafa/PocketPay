@@ -4,30 +4,38 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/css/base.css">
+    <link rel="stylesheet" href="/css/cards.css">
     <title>Document</title>
 </head>
 <body>
     <%- include('../partials/navbar') %>
-    <main>
-    <h1>Add Your Card</h1>
+    <main class="box">
+    <h1 style="text-align: center">Add Your Card</h1>
     <form action="/card" method="post">
-        <label for="cardNumber">Card Number</label>
-        <input name="cardNumber" id="cardNumber" type="number">
-        <br>
-        <br>
-        <label for="cardType">Card Type</label>
-        <select name="cardType" id="cardType" required>
+        <section class="card-visual card-form card-debit">
+        <label for="nickname" class="card-type">Nickname</label>
+        <input name="nickname" id="nickname" type="text" class="card-input">
+        <label for="cardNumber" class="card-type">Card Number</label>
+        <div class="card-number-group">
+        <span class="card-number-mask">xxxx xxxx xxxx </span>
+        <input name="cardNumber" id="cardNumber" type="text" inputmode="numeric" pattern="[0-9]{4}" maxlength="4" class="card-input card-number-input">
+        </div>
+        <div class="card-form-row">
+            <div>
+        <label for="cardType" class="card-type">Card Type</label>
+        <select name="cardType" id="cardType" required class="card-input">
             <option value="">-- Select --</option>
             <option value="debit">Debit</option>
             <option value="credit">Credit</option>
-        </select>           
-        <br>
-        <br>
-        <label for="expiryDate">Expiry Date</label>
-        <input name="expiryDate" id="expiryDate" type="month">
-        <br>  
-        <br>
-        <button  class="btn">Add card</button>
+        </select>  
+        </div>   
+        <div>      
+        <label for="expiryDate" class="card-type">Expiry Date</label>
+        <input name="expiryDate" id="expiryDate" type="month" class="card-input">
+        </div>
+        </div>
+        </section>
+        <button style="margin-left: auto; display: block;" class="btn">Add card</button>
     </form>
     </main>
 </body>
