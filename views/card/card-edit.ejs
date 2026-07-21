@@ -4,29 +4,33 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/css/base.css">
-    <title>Document</title>
+    <link rel="stylesheet" href="/css/cards.css">
+    <title>Edit Card</title>
 </head>
 <body>
     <%- include('../partials/navbar') %>
-    <main>
-    <h1>Edit Your Card</h1>
+    <main class="box" style="margin-top: 3rem;">
+    <h1 style="text-align: center">Edit Your Card</h1>
     <form action="/card/<%=card._id%>/edit" method="post">
-        <label for="cardNumber">Card Number</label>
-        <input value="<%=card.cardNumber %>" name="cardNumber" id="cardNumber" type="number">
-        <br>
-        <br>
-        <label for="cardType">Card Type</label>
-        <select name="cardType" id="cardType" required>
-            <option value="debit">Debit</option>
-            <option value="credit">Credit</option>
-        </select>           
-        <br>
-        <br>
-        <label for="expiryDate">Expiry Date</label>
-        <input value="<%=card.expiryDate%>" name="expiryDate" id="expiryDate" type="month">
-        <br>  
-        <br>
-        <button class="btn">Confirm Edit</button>
+        <section class="card-visual card-form card-<%=card.cardType%>">
+        <label for="nickname" class="card-type">Nickname</label>
+        <input value="<%=card.nickname%>" name="nickname" id="nickname" type="text" class="card-input">
+        <label for="cardNumber" class="card-type">Card Number</label>
+        <div class="card-number-group">
+        <p class="card-number-mask">xxxx xxxx xxxx <%=card.cardNumber%></p>
+        </div>
+        <div class="card-form-row">
+            <div>
+        <label for="cardType" class="card-type">Card Type</label>
+        <p class="card-value"><%=card.cardType%></p>
+        </div>   
+        <div>      
+        <label for="expiryDate" class="card-type">Expiry Date</label>
+        <input value="<%=card.expiryDate%>" name="expiryDate" id="expiryDate" type="month" class="card-input">
+        </div>
+        </div>
+        </section>
+        <button style="margin-left: auto; display: block;" class="btn">Confirm Edit</button>
     </form>
     </main>
 </body>

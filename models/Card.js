@@ -7,10 +7,8 @@ const cardSchema = new mongoose.Schema({
 
     },
     cardNumber:{
-        type: Number,
-        min: 1000,
-        max: 9999,
-        unique: true,
+        type: String,
+        maxLength: 9999,
         require: true
     },
     cardType: {

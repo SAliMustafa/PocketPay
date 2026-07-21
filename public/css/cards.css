@@ -116,3 +116,10 @@
     background-color: #0F4C43;
     color: #FFFFFF;
 }
+
+.card-value {
+    color: #FFFFFF;
+    font-size: 1rem;
+    margin-bottom: 1rem;
+    text-transform: capitalize;
+}
