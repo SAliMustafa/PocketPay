@@ -19,7 +19,7 @@ router.post('/deposit', isSignedIn, async (req,res)=>{
         transactionType: 'deposit',
         amount: req.body.amount
     })
-    res.redirect('/card')
+    res.redirect(`/card/${foundCard._id}`)
 })
 
 router.get('/new-withdrawal', isSignedIn, async (req,res)=>{

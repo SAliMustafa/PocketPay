@@ -4,17 +4,23 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/css/base.css">
-    <title>Document</title>
+    <link rel="stylesheet" href="/css/transaction.css">
+    <title>Deposit | PocketPay</title>
 </head>
 <body>
     <%- include('../partials/navbar') %>
-    <main>
+    <main style="margin-top: 3rem;" class="box container">
     <h1>Deposit Money</h1>
-    <form action="/card/<%=card._id%>/transaction/deposit" method="post">
+    <p>Depostiting to: <%=card.nickname%>, ending with <%=card.cardNumber%></p>
+    <form action="/card/<%=card._id%>/transaction/deposit" method="post" class="transaction-form">
+        <div class="form-group">
         <label for="amount">Deposit Amount</label>
-        <input name="amount" id="amount" type="number" step="0.1">
-        <br><br>
-        <button class="btn">Deposit</button>
+        <input name="amount" id="amount" type="number" step="0.01" min="0.01">
+        </div>
+        <div class="form-action">
+        <button class="btn">Confirm Deposit</button>
+        <a href="/card/<%=card._id%>" class="btn-link">Cancel</a>
+        </div>
     </form>
     </main>
 </body>
