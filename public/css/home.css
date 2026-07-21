@@ -30,3 +30,6 @@
     color: #DC2626;
     font-weight: 600;
 }
+.transaction-row:first-child {
+    padding-top: 0;
+}

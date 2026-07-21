@@ -11,13 +11,13 @@ router.get('/', isSignedIn, async (req, res) => {
     }
     const cardIds = cards.map(card => card._id)
 
-    const recentTransactions = await Transaction.find({ card: { $in: cardIds } }).sort({ createdAt: -1 }).limit(5).populate('counterparty')
+    const transactions = await Transaction.find({ card: { $in: cardIds } }).sort({ createdAt: -1 }).limit(5).populate('counterparty')
 
     res.render('homepage.ejs', {
         user: req.session.user,
-        cards: cards,
+        card: cards,
         totalBalance: totalBalance,
-        recentTransactions: recentTransactions
+        transactions: transactions
     })
 })
 module.exports = router;

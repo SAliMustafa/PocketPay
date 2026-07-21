@@ -1,26 +1,82 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/css/base.css">
-    <title>Document</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="/css/base.css" />
+  <link rel="stylesheet" href="/css/cards.css" />
+  <link rel="stylesheet" href="/css/home.css">
+  <title>Document</title>
 </head>
+
 <body>
-    <%- include('../partials/navbar') %>
+  <%- include('../partials/navbar') %>
     <main>
-    <h1>Card Details</h1>
-    <p>Card Number: <%=card.cardNumber%> </p>
-    <p>Card Type: <%=card.cardType%></p>
-    <p>Expiry Date: <%=card.expiryDate%></p>
-    <p>Balance: BD <%=card.balance%></p>
-    <a href="/card/<%=card._id%>/edit"><button>Edit</button></a>
-    <form action="/card/<%=card._id%>/delete" method="post">
-        <button  class="btn">Delete Card</button>
-    </form>
-    <a href="/card/<%=card._id%>/transaction/new-deposit"><button  class="btn">Deposit</button></a>
-    <a href="/card/<%=card._id%>/transaction/new-withdrawal"><button  class="btn">Withdraw</button></a>
-    <a href="/card/<%=card._id%>/transaction/new-transfer"><button  class="btn">Transfer</button></a>
+      <h1>
+        <%=card.nickname%> Card Details
+      </h1>
+      <ul class="card-details">
+        <li>
+          <section class="card-visual card-<%=card.cardType%>">
+            <div class="card-actions">
+              <a href="/card/<%=card._id%>/edit" aria-label="Edit card">✏️</a>
+              <form action="/card/<%=card._id%>/delete" method="post" onsubmit="return confirm('Delete this card?')">
+                <button type="submit" aria-label="Delete card">🗑️</button>
+              </form>
+            </div>
+            <p class="card-type">
+              <%=card.cardType%>
+            </p>
+            <p class="card-nickname">
+              <%=card.nickname%>
+            </p>
+            <p class="card-number">xxxx xxxx xxxx <%=card.cardNumber%>
+            </p>
+            <p class="card-balance">BD <%=card.balance.toFixed(2)%>
+            </p>
+          </section>
+        </li>
+      </ul>
+      <div class="btn-group">
+        <a href="/card/<%=card._id%>/transaction/new-deposit">
+          <button class="btn">Deposit</button>
+        </a>
+        <a href="/card/<%=card._id%>/transaction/new-withdrawal">
+          <button class="btn">Withdraw</button>
+        </a>
+        <a href="/card/<%=card._id%>/transaction/new-transfer">
+          <button class="btn">Transfer</button>
+        </a>
+      </div>
+      <section>
+        <h2>Transaction History</h2>
+        <% if(transactions.length==0) {%>
+          <p>No transactions yet.</p>
+          <%}else{%>
+            <ul class="transaction-list box">
+              <% for (let t of transactions){%>
+                <li class="transaction-row">
+                  <div>
+                    <p><%= t.transactionType %></p>
+                    <p><%= t.createdAt.toDateString() %></p>
+                    <% if (t.transactionType==='transfer_in' ) { %>
+                      <p>from: <%= t.counterparty.username %></p>
+                      <% } else if (t.transactionType==='transfer_out' ) { %>
+                        <p>to: <%= t.counterparty.username %></p>
+                      <% } %>
+                  </div>
+                  <%if(t.transactionType=='deposit' || t.transactionType=='transfer_in' ){%>
+                    <p class="amount-positive">+BD <%=t.amount.toFixed(2)%></p>
+                    <%}else if(t.transactionType=='transfer_out' || t.transactionType=='withdrawal' ){%>
+                      <p class="amount-negative">-BD <%=t.amount.toFixed(2)%></p>
+                      <%}%>
+                    </li>
+                  <%}%>
+            </ul>
+            <%}%>
+      </section>
     </main>
 </body>
+
 </html>

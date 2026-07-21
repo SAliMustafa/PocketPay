@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="/css/base.css">
     <link rel="stylesheet" href="/css/cards.css">
     <link rel="stylesheet" href="/css/home.css">
-    <title>Document</title>
+    <title>Homepage</title>
 </head>
 <body>
     <%- include('./partials/navbar') %>
@@ -22,12 +22,13 @@
                 <a href="/card">View all</a>
             </div>
             <ul class="card-grid">
-                <% for (let card of cards){%>
+                <% for (let oneCard of card){%>
                     <li>
-                        <a href="/card/<%=card._id%>" class="card-visual card-<%=card.cardType%>">
-                            <p class="card-type"><%=card.cardType%></p>
-                            <p class="card-number">xxxx xxxx xxxx <%=card.cardNumber%></p>
-                            <p class="card-balance">BD <%=card.balance.toFixed(2)%></p>
+                        <a href="/card/<%=oneCard._id%>" class="card-visual card-<%=oneCard.cardType%>">
+                            <p class="card-type"><%=oneCard.cardType%></p>
+                            <p class="card-nickname"><%=oneCard.nickname%></p>
+                            <p class="card-number">xxxx xxxx xxxx <%=oneCard.cardNumber%></p>
+                            <p class="card-balance">BD <%=oneCard.balance.toFixed(2)%></p>
                         </a>
                     </li>
                 <%}%>
@@ -35,27 +36,33 @@
                     <a href="/card/new" class="card-tile-add">+ Add Card</a>
                 </li>
             </ul>
+
         </section>
         <section>
             <h2>Recent Activity</h2>
-            <% if (recentTransactions.length === 0){%>
+            <% if (transactions.length === 0){%>
                 <p>No transactions yet</p>
             <%}else{%>
-                <ul class="transaction-list box">
-                    <% for (let t of recentTransactions){%>
-                        <li class="transaction-row">
-                            <div>
-                                <p><%=t.transactionType%></p>
-                                <p><%=t.createdAt.toDateString() %></p>
-                            </div>
-                            <%if(t.transactionType === 'deposit' || t.transactionType === 'transfer_in'){%>
-                                <p class="amount-positive">+BD <%=t.amount.toFixed(2)%></p>
-                            <%}else{%>
-                                <p class="amount-negative">-BD <%=t.amount.toFixed(2)%></p>
-                            <%}%>
-                        </li>
-                    <%}%>
-                </ul>
+            <ul class="transaction-list box">
+              <% for (let t of transactions){%>
+                <li class="transaction-row">
+                  <div>
+                    <p><%= t.transactionType %></p>
+                    <p><%= t.createdAt.toDateString() %></p>
+                    <% if (t.transactionType==='transfer_in' ) { %>
+                      <p>from: <%= t.counterparty.username %></p>
+                      <% } else if (t.transactionType==='transfer_out' ) { %>
+                        <p>to: <%= t.counterparty.username %></p>
+                      <% } %>
+                  </div>
+                  <%if(t.transactionType=='deposit' || t.transactionType=='transfer_in' ){%>
+                    <p class="amount-positive">+BD <%=t.amount.toFixed(2)%></p>
+                    <%}else if(t.transactionType=='transfer_out' || t.transactionType=='withdrawal' ){%>
+                      <p class="amount-negative">-BD <%=t.amount.toFixed(2)%></p>
+                      <%}%>
+                    </li>
+                  <%}%>
+            </ul>
             <% }%>
         </section>
     </main>
