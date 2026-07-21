@@ -4,25 +4,29 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="/css/base.css">
+        <link rel="stylesheet" href="/css/transaction.css">
     <title>Document</title>
 </head>
 <body>
     <%- include('../partials/navbar') %>
-    <main>
+    <main class="box container">
     <h1>Confirm Transfer</h1>
-    <form action="/card/<%=card._id%>/transaction/confirm-transaction" method="post">
+    <form action="/card/<%=card._id%>/transaction/confirm-transaction" method="post" class="transaction-form">
+        <div class="form-group">
         <input type="hidden" name="recipientId" value="<%= recipient._id %>">
-        <label for="recipientCardId">Choose Card to Transfer to</label>
+        <label for="recipientCardId">Select Recipient Card</label>
         <select name="recipientCardId" id="recipientCardId">
             <% for (let card of recipientCards) {%>
-                <option value="<%=card._id%>">Ending with <%= card.cardNumber %></option>
+                <option value="<%=card._id%>"><%=card.nickname%>, Ending with <%= card.cardNumber %></option>
             <% } %>
         </select>
-        <br><br>
-        <label for="amount">Amout to transfer</label>
+        <label for="amount">Amout to Transfer</label>
         <input name="amount" id="amount" type="Number" step="0.1">
-        <br><br>
+        </div>
+        <div class="form-action">
         <button class="btn">Send</button>
+        <a href="/card/<%=card._id%> ">Cancel</a>
+        </div>
     </form>
     </main>
 </body>

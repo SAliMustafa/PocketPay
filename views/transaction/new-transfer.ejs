@@ -4,17 +4,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="/css/base.css">
-    <title>Document</title>
+        <link rel="stylesheet" href="/css/transaction.css">
+    <title>Transaction | PocketPay</title>
 </head>
 <body>
     <%- include('../partials/navbar') %>
-    <main>
+    <main main style="margin-top: 3rem;" class="box container">
     <h1>Send Money</h1>
-    <form action="/card/<%=card._id%>/transaction/find-recipient" method="post">
-        <label for="username">username</label>
-        <input name="username" id="username" type="text">
-        <br><br>
+    <form action="/card/<%=card._id%>/transaction/find-recipient" method="post" class="transaction-form">
+        <div class="form-group">
+        <label for="username">Username</label>
+        <input name="username" id="username" type="text" placeholder="e.g. zaid">
+        </div>
+        <div class="form-action">
         <button class="btn">Next</button>
+        <a href="/card/<%=card._id%>" class="btn-link">Cancel</a>
+        </div>
     </form>
     </main>
 </body>
