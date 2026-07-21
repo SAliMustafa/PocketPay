@@ -4,12 +4,14 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       <link rel="stylesheet" href="/css/base.css">
+      <link rel="stylesheet" href="/css/auth.css">
     <title>Sign Up</title>
   </head>
   <body>
     <%- include('../partials/navbar') %>
+    <main class="box">
     <h1>Create a new account!</h1>
-    <form action="/auth/sign-up" method="post">
+    <form action="/auth/sign-up" method="post" class="auth-form">
       <label for="username">Username:</label>
       <input type="text" name="username" id="username" />
       <label for="password">Password:</label>
@@ -18,5 +20,6 @@
       <input type="password" name="confirmPassword" id="confirmPassword" />
       <button type="submit">Sign up</button>
     </form>
+    </main>
   </body>
 </html>
