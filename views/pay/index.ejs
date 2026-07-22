@@ -13,7 +13,8 @@
         <h1 style="text-align: center">Complete Payment</h1>
         <form action="/pay/payment" method="post">
             <input type="hidden" name="amount" value="<%= amount %>">
-            <input type="hidden" name="userId" value="<%= user._id %>">
+            <input type="hidden" name="userId" value="<%= userId %>">
+            <input type="hidden" name="flightId" value="<%= flightId %>">
 
             <section class="card-visual card-form card-debit">
                 <label for="cardholderName" class="card-type">Cardholder Name</label>

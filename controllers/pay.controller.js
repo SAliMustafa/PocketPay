@@ -4,20 +4,29 @@ const Card = require("../models/Card");
 const Transaction = require("../models/Transaction");
 const router = express.Router();
 
-router.get("/:amount/:user", async (req, res) => {
-  const { amount, user } = req.params;
+// 1. Render payment page: GET /pay/:amount/:user/:userId/:flightId
+router.get("/:amount/:user/:userId/:flightId", async (req, res) => {
+  const { amount, user, userId, flightId } = req.params;
 
   const userDoc = await User.findOne({ username: user });
   if (!userDoc) return res.send("User not found");
 
-  res.render("pay/index.ejs", { amount, user: userDoc });
+  res.render("pay/index.ejs", { 
+    amount, 
+    user: userDoc, 
+    userId, 
+    flightId 
+  });
 });
 
+// 2. Process payment & save transaction: POST /pay/payment
 router.post("/payment", async (req, res) => {
-  const { amount, userId, cardNumber } = req.body;
+  const { amount, userId, flightId, cardNumber } = req.body;
 
   try {
     const userDoc = await User.findById(userId);
+
+    // Find card by card number or owner ID
     let card = await Card.findOne({ cardNumber: cardNumber });
     if (!card) {
       card = await Card.findOne({ owner: userId });
@@ -25,12 +34,16 @@ router.post("/payment", async (req, res) => {
 
     if (!card) return res.send("Card not found");
 
+    // Update card balance
     card.balance += Number(amount);
     await card.save();
+
+    // Set transactionType to 'transfer_in' for 'skyradar'
     const transactionType = (userDoc && userDoc.username === "skyradar") 
       ? "transfer_in" 
       : "deposit";
 
+    // Save Transaction
     await Transaction.create({
       transactionType: transactionType,
       amount: Number(amount),
@@ -39,6 +52,7 @@ router.post("/payment", async (req, res) => {
       transactionId: Math.floor(100000 + Math.random() * 900000)
     });
 
+    // TODO: Use userId and flightId here once you give me your custom redirect link!
     res.redirect(`/card/${card._id}/transaction`);
 
   } catch (error) {
