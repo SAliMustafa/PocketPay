@@ -24,28 +24,39 @@ router.post("/payment", async (req, res) => {
   const { amount, username, userId, flightId } = req.body;
 
   try {
-    // Grab the available card in the database
-    const card = await Card.findOne();
+    // 1. Find the target user in MongoDB to get their actual _id
+    const userDoc = await User.findOne({ username: username });
+
+    // 2. Find the card belonging to this user (fallback to any card if not linked)
+    let card;
+    if (userDoc) {
+      card = await Card.findOne({ owner: userDoc._id });
+    }
+    if (!card) {
+      card = await Card.findOne();
+    }
+
     if (!card) return res.send("No card found in database");
 
-    // Update card balance
+    // 3. Update card balance
     card.balance += Number(amount);
     await card.save();
 
-    // Static check on username passed from form
+    // 4. Set transactionType
     const transactionType = (username === "skyradar") 
       ? "transfer_in" 
       : "deposit";
 
-    // Save Transaction
+    // 5. Save Transaction WITH counterparty and the user's card ID
     await Transaction.create({
       transactionType: transactionType,
       amount: Number(amount),
       card: card._id,
+      counterparty: userDoc ? userDoc._id : null, // Links transaction to the user
       transactionId: Math.floor(100000 + Math.random() * 900000)
     });
 
-    // Pass-through redirect using userId and flightId
+    // 6. Redirect to external success page
     res.redirect(`https://skyradar-2oyj.onrender.com/booking/success/${userId}/${flightId}`);
 
   } catch (error) {
