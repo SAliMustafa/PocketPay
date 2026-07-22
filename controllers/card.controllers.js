@@ -4,8 +4,12 @@ const Transaction = require("../models/Transaction")
 const router = require("express").Router()
 
 router.get('/', async (req,res)=>{
+    try{
     const myCard = await Card.find({ owner: req.session.user._id })
     res.render('card/card.ejs', {card: myCard})
+    } catch(err){
+        console.log('Error: '+err)
+    }
 })
 
 router.get('/new', async (req,res)=>{

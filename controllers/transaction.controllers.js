@@ -79,6 +79,10 @@ router.post('/confirm-transaction', async (req,res)=>{
         await recipientCard.save()
         const transferId = new mongoose.Types.ObjectId()
 
+        if (foundCard._id.toString() === recipientCardId.toString()) {
+        return res.send('You cannot transfer funds to the exact same card!')
+        }
+
         await Transaction.create({
             card: foundCard._id,
             transactionType: 'transfer_out',
