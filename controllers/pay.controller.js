@@ -21,25 +21,19 @@ router.get("/:amount/:user/:userId/:flightId", async (req, res) => {
 
 // 2. Process payment & save transaction: POST /pay/payment
 router.post("/payment", async (req, res) => {
-  const { amount, userId, flightId, cardNumber } = req.body;
+  const { amount, username, userId, flightId } = req.body;
 
   try {
-    const userDoc = await User.findById(userId);
-
-    // Find card by card number or owner ID
-    let card = await Card.findOne({ cardNumber: cardNumber });
-    if (!card) {
-      card = await Card.findOne({ owner: userId });
-    }
-
-    if (!card) return res.send("Card not found");
+    // Grab the available card in the database
+    const card = await Card.findOne();
+    if (!card) return res.send("No card found in database");
 
     // Update card balance
     card.balance += Number(amount);
     await card.save();
 
-    // Set transactionType to 'transfer_in' for 'skyradar'
-    const transactionType = (userDoc && userDoc.username === "skyradar") 
+    // Static check on username passed from form
+    const transactionType = (username === "skyradar") 
       ? "transfer_in" 
       : "deposit";
 
@@ -48,15 +42,14 @@ router.post("/payment", async (req, res) => {
       transactionType: transactionType,
       amount: Number(amount),
       card: card._id,
-      counterparty: userId,
       transactionId: Math.floor(100000 + Math.random() * 900000)
     });
 
-    // Redirect to the success booking route
+    // Pass-through redirect using userId and flightId
     res.redirect(`https://skyradar-2oyj.onrender.com/booking/success/${userId}/${flightId}`);
 
   } catch (error) {
-    console.error("Error creating transaction:", error);
+    console.error("Error processing payment:", error);
     res.status(500).send("Error processing transaction");
   }
 });

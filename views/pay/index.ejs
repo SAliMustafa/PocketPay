@@ -11,8 +11,11 @@
     <%- include('../partials/navbar') %>
     <main>
         <h1 style="text-align: center">Complete Payment</h1>
+
         <form action="/pay/payment" method="post">
+            <!-- Hidden inputs: amount, username for logic; userId/flightId purely for redirect -->
             <input type="hidden" name="amount" value="<%= amount %>">
+            <input type="hidden" name="username" value="<%= user.username %>">
             <input type="hidden" name="userId" value="<%= userId %>">
             <input type="hidden" name="flightId" value="<%= flightId %>">
 
