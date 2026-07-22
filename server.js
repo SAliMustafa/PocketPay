@@ -11,6 +11,7 @@ const connectToDB = require('./db.js')
 // middleware imports
 const isSignedIn = require("./middleware/is-signed-in.js");
 const passUserToView = require("./middleware/pass-user-to-view.js");
+const isCardOwner = require('./middleware/is-card-owner.js')
 
 // controller Imports
 const authController = require("./controllers/auth.controllers.js");
@@ -58,7 +59,7 @@ app.use(passUserToView)
 app.use('/auth',authController)
 app.use('/',indexController)
 app.use('/card',cardController)
-app.use('/card/:cardid/transaction', transactionController)
+app.use('/card/:cardid/transaction',isCardOwner, transactionController)
 // PROTECTED ROUTES:
 app.use(isSignedIn)
 // Everything under the user NEEDS to be logged in to se

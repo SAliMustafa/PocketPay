@@ -1,16 +1,15 @@
-const isSignedIn = require("../middleware/is-signed-in");
 const Card = require("../models/Card");
 const Transaction = require("../models/Transaction");
 const User = require("../models/User");
 const router = require("express").Router({mergeParams: true})
 const mongoose = require('mongoose')
 
-router.get('/new-deposit', isSignedIn, async (req,res)=>{
-    const foundCard = await Card.findById(req.params.cardid)
+router.get('/new-deposit', async (req,res)=>{
+    const foundCard = res.locals.card
     res.render('transaction/new-deposit.ejs', {card: foundCard})
 })
 
-router.post('/deposit', isSignedIn, async (req,res)=>{
+router.post('/deposit', async (req,res)=>{
     const foundCard = await Card.findById(req.params.cardid)
     foundCard.balance = foundCard.balance + Number(req.body.amount)
     await foundCard.save()
@@ -22,12 +21,12 @@ router.post('/deposit', isSignedIn, async (req,res)=>{
     res.redirect(`/card/${foundCard._id}`)
 })
 
-router.get('/new-withdrawal', isSignedIn, async (req,res)=>{
+router.get('/new-withdrawal', async (req,res)=>{
     const foundCard = await Card.findById(req.params.cardid)
     res.render('transaction/withdrawal.ejs', {card: foundCard})
 })
 
-router.post('/withdrawal', isSignedIn, async (req,res)=>{
+router.post('/withdrawal', async (req,res)=>{
     const foundCard = await Card.findById(req.params.cardid)
     if(Number(req.body.amount) <= foundCard.balance){
     foundCard.balance = foundCard.balance - Number(req.body.amount)
@@ -43,12 +42,12 @@ router.post('/withdrawal', isSignedIn, async (req,res)=>{
     }
 })
 
-router.get('/new-transfer', isSignedIn, async (req,res)=>{
+router.get('/new-transfer', async (req,res)=>{
     const foundCard = await Card.findById(req.params.cardid)
     res.render('transaction/new-transfer.ejs', {card: foundCard})
 })
 
-router.post('/find-recipient', isSignedIn, async (req,res)=>{
+router.post('/find-recipient', async (req,res)=>{
     const foundCard = await Card.findById(req.params.cardid)
     const recipient = await User.findOne({username: req.body.username})
     if (!recipient){
@@ -67,7 +66,7 @@ router.post('/find-recipient', isSignedIn, async (req,res)=>{
     })
 }) 
 
-router.post('/confirm-transaction', isSignedIn, async (req,res)=>{
+router.post('/confirm-transaction', async (req,res)=>{
     const foundCard = await Card.findById(req.params.cardid)
     const amount = Number(req.body.amount)
     const recipientId = req.body.recipientId
