@@ -3,25 +3,23 @@ const Card = require("../models/Card")
 const Transaction = require("../models/Transaction")
 const router = require("express").Router()
 
-router.get('/', isSignedIn, async (req,res)=>{
+router.get('/', async (req,res)=>{
     const myCard = await Card.find({ owner: req.session.user._id })
-    console.log(myCard)
     res.render('card/card.ejs', {card: myCard})
 })
 
-router.get('/new', isSignedIn, async (req,res)=>{
+router.get('/new', async (req,res)=>{
     res.render('card/new.ejs')
 })
-router.post('/', isSignedIn, async (req,res)=>{
+router.post('/', async (req,res)=>{
     req.body.owner = req.session.user._id
     const createdCard = await Card.create(req.body)
     res.redirect('/card')
 })
 
-router.get('/:cardid', isSignedIn, async (req,res)=>{
+router.get('/:cardid', async (req,res)=>{
     const foundCard = await Card.findById(req.params.cardid)
     const transactions = await Transaction.find({card: foundCard._id}).sort({createdAt: -1}).populate('counterparty')
-    console.log(foundCard.owner)
     if(foundCard.owner == req.session.user._id){
     res.render('card/card-details.ejs', {card: foundCard, transactions: transactions})
     } else{
@@ -29,17 +27,17 @@ router.get('/:cardid', isSignedIn, async (req,res)=>{
     }
 })
 
-router.get('/:cardid/edit', isSignedIn, async (req,res)=>{
+router.get('/:cardid/edit', async (req,res)=>{
     const foundCard = await Card.findById(req.params.cardid)
     res.render('card/card-edit.ejs', {card: foundCard})
 })
 
-router.post('/:cardid/edit', isSignedIn, async (req,res)=>{
+router.post('/:cardid/edit', async (req,res)=>{
     const updatedCard = await Card.findByIdAndUpdate(req.params.cardid, req.body)
     res.redirect('/card')
 })
 
-router.post('/:cardid/delete', isSignedIn, async (req,res)=>{
+router.post('/:cardid/delete', async (req,res)=>{
     const deleteCard = await Card.findByIdAndDelete(req.params.cardid)
     res.redirect('/card')
 })
