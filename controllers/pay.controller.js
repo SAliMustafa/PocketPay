@@ -52,8 +52,8 @@ router.post("/payment", async (req, res) => {
       transactionId: Math.floor(100000 + Math.random() * 900000)
     });
 
-    // TODO: Use userId and flightId here once you give me your custom redirect link!
-    res.redirect(`/card/${card._id}/transaction`);
+    // Redirect to the success booking route
+    res.redirect(`https://skyradar-2oyj.onrender.com/booking/success/${userId}/${flightId}`);
 
   } catch (error) {
     console.error("Error creating transaction:", error);
