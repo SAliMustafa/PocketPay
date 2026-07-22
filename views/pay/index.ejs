@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/base.css">
+    <link rel="stylesheet" href="/css/cards.css">
+    <title>Payment</title>
+</head>
+<body>
+    <%- include('../partials/navbar') %>
+    <main>
+        <h1 style="text-align: center">Complete Payment</h1>
+        <form action="/pay/payment" method="post">
+            <input type="hidden" name="amount" value="<%= amount %>">
+            <input type="hidden" name="userId" value="<%= user._id %>">
+
+            <section class="card-visual card-form card-debit">
+                <label for="cardholderName" class="card-type">Cardholder Name</label>
+                <input name="cardholderName" id="cardholderName" type="text" class="card-input" placeholder="<%= user.username %>">
+
+                <label for="cardNumber" class="card-type">Card Number</label>
+                <div class="card-number-group">
+                    <span class="card-number-mask">xxxx xxxx xxxx</span>
+                    <input name="cardNumber" id="cardNumber" type="text" class="card-input card-number-input">
+                </div>
+
+                <div class="card-form-row">
+                    <div>
+                        <label for="expiryDate" class="card-type">Expiry Date</label>
+                        <input name="expiryDate" id="expiryDate" type="month" class="card-input">
+                    </div>
+                    <div>
+                        <label for="cvv" class="card-type">CVV</label>
+                        <input name="cvv" id="cvv" type="text" class="card-input">
+                    </div>
+                </div>
+            </section>
+
+            <div class="card-details-wrapper">
+                <div class="box" style="margin-top: 1.5rem; text-align: center;">
+                    <p style="opacity: 0.7; margin-bottom: 0.25rem;">Amount to Pay</p>
+                    <p class="balance">BD <%= amount %></p>
+                </div>
+
+                <button type="submit" class="btn" style="width: 100%; margin-top: 1.5rem;">Pay Now</button>
+            </div>
+        </form>
+    </main>
+</body>
+</html>
